@@ -1,8 +1,8 @@
 {
     "rootSourceFiles": [
-        "./md-src/manual.md"
+        "./example/manual.md"
     ],
-    "outputDirectory": "./md-parsed",
+    "outputDirectory": "./example/transformed",
     "options": {
         "gfm": true,
         "include": true,

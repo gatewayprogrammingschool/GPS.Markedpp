@@ -1,65 +1,66 @@
-# gps-markdpp README
+# GPS.Markedpp
 
-This is the README for your extension "gps-markdpp". After writing up a brief description, we recommend including the following sections.
+This extension performs pre-processing on Markdown (or any other text file) with the [markedpp](https://github.com/commenthol/markedpp) node.js module.
+
+Simply configure the .gps.markedpp config file to define the root source files and options for markedpp, then invoke the "GPS: Transform" command.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+GPS.Markedpp allows for all options of markedpp to be used including:
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Generation of a "Table of Contents"
+- Automatic numbering of Headings
+- Include various files into a single output document
+- Sorted collection of References
+- Autonumbering of ordered lists
+- Automatic update of heading identifiers
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+There are no dependencies for this plugin that won't be installed by VS-Code.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+GPS.Markedpp uses a configuration file named .gps.markedpp that contains the location of the root files to process.  
 
-For example:
+The format of .gps.markedpp
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+```json
+{
+    "rootSourceFiles": [
+        "./example/manual.md"
+    ],
+    "outputDirectory": "./example/transformed",
+    "options": {
+        "gfm": true,
+        "include": true,
+        "toc": true,
+        "numberedheadings": true,
+        "ref": true,
+        "breaks": true,
+        "tags": true,
+        "level": 3,
+        "minlevel": 1,
+        "autonumber": true,
+        "autoid": true,
+        "githubidv": false    
+    }
+}
+```
+- **rootSourceFiles** is an array of filenames (including path if necessary) that points to files that are to be the beginning of a transformation.  You can have multiple transformations across multiple root files.
+- **outputDirectory** specifies the location for the transformed files to be written to.
+- **options** specifies the [markedpp options](https://github.com/commenthol/markedpp#usage) to pass to the pre-processor.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+None... at this time.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
+Initial release of GPS.Marked
 
-### 1.0.1
+### GPS.Markedpp is released under the MIT license.
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+###### (c) 2018, Gateway Programming School, Inc.
