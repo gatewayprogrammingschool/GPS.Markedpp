@@ -1,24 +1,24 @@
 {
-    "name": "gps-markdpp",
-    "displayName": "GPS.Markdpp",
-    "description": "VSCode Addin for applying preprocessor transforms for Markdown via markdpp.",
+    "name": "gps-markedpp",
+    "displayName": "GPS.Markedpp",
+    "description": "VSCode Addin for applying preprocessor transforms for Markdown via markedpp.",
     "version": "0.0.1",
     "publisher": "GatewayProgrammingSchoolInc",
     "engines": {
         "vscode": "^1.27.0"
     },
     "categories": [
-        "Other"
+        "Formatters"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:gps-markdown.transformMarkdown"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "gps-markdown.transformMarkdown",
+                "title": "GPS: Transform Markdown"
             }
         ]
     },
@@ -35,5 +35,9 @@
         "tslint": "^5.8.0",
         "@types/node": "^8.10.25",
         "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "markedpp": "^0.3.10",
+        "typescript-string-operations": "^1.3.1"
     }
 }
