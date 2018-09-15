@@ -20,7 +20,12 @@ export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand(
         'gps-markdown.transformMarkdown', () => {
             // The code you place here will be executed every time your command is executed
-
+            if(!vscode.workspace.workspaceFolders) {
+                vscode.window.showErrorMessage("No workspace folder.");
+                return;
+            }
+            
+            var rootFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;
             var markedppOptions = new MarkedppOptions();
             markedppOptions.initialize(context).then((result) => {
                 if (!result) {
@@ -29,29 +34,41 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 try {
-                    markedppOptions.rootSourceFiles.forEach(sourceFile => {
-                        var markedpp = require('markedpp'),
-                            options = markedppOptions.options;
+                    if (markedppOptions.rootSourceFiles.length > 0) {
+                        markedppOptions.rootSourceFiles.forEach(sourceFile => {
+                            var markedpp = require('markedpp'),
+                                options = markedppOptions.options;
 
-                        var filename = context.asAbsolutePath(sourceFile);
-                        var path = filename.substring(0, filename.length - (filename.replace(/^.*[\\\/]/, '')).length);
-                        
-                        options.dirname = path;
+                            var filename = "";
+                            filename = require('path').join(rootFolder, sourceFile).toString();
 
-                        readFile(filename, (err, data) => {
-                            if (err) {
-                                throw err;
-                            }
+                            sourceFile = require('path').basename(filename);
 
-                            markedpp(data.toString(), options, function (err: any, result: string) {
-                                writeResult(context, result, sourceFile, markedppOptions);
+                            var path = filename.substring(0, filename.length - (filename.replace(/^.*[\\\/]/, '')).length);
+
+                            options.dirname = path;
+
+                            var destination = "";
+                            destination = require('path').join(rootFolder, markedppOptions.outputDirectory);
+
+                            readFile(filename, (err, data) => {
+                                if (err) {
+                                    throw err;
+                                }
+
+                                markedpp(data.toString(), options, function (err: any, result: string) {
+                                    writeResult(destination, result, sourceFile);
+                                });
                             });
+
                         });
 
-                    });
-
-                    // Display a message box to the user
-                    vscode.window.showInformationMessage('Transform Complete.');
+                        // Display a message box to the user
+                        vscode.window.showInformationMessage('Transform Complete.');
+                    }
+                    else {
+                        vscode.window.showWarningMessage('No files to process.');
+                    }
                 }
                 catch (err) {
                     vscode.window.showErrorMessage("Transformation was unsuccessful.");
@@ -68,13 +85,14 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
 }
 
-function writeResult(context: vscode.ExtensionContext,
+function writeResult(
+    path: string, 
     result: string,
-    filename: string,
-    options: MarkedppOptions) {
-    var file = context.asAbsolutePath(require('path').join(options.outputDirectory, filename.replace(/^.*[\\\/]/, '')));
+    filename: string) {
+    var file = require('path').join(path, filename.replace(/^.*[\\\/]/, ''));
 
     writeFile(file, result, null, (err) => {
+        vscode.window.showErrorMessage(err.message);
         console.error(err);
     });
 }
