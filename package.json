@@ -2,7 +2,7 @@
     "name": "gps-markedpp",
     "displayName": "GPS.Markedpp",
     "description": "VSCode Addin for applying preprocessor transforms for Markdown via markedpp.",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "publisher": "GatewayProgrammingSchoolInc",
     "repository": {
         "type": "git",

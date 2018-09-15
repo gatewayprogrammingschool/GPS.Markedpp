@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
             
             var rootFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;
             var markedppOptions = new MarkedppOptions();
-            markedppOptions.initialize(context).then((result) => {
+            markedppOptions.initialize(rootFolder).then((result) => {
                 if (!result) {
                     vscode.window.showInformationMessage(
                         "Used default configuration.  Check your config file.");
@@ -117,9 +117,9 @@ class MarkedppOptions {
         githubid: false,    // use github convention for heading auto identifiers
     };
 
-    public initialize(context: vscode.ExtensionContext) {
+    public initialize(path: string) {
         return new Promise((resolve, reject) => {
-            var path = context.asAbsolutePath('.gps.markedpp');
+            //var path =  //context.asAbsolutePath('.gps.markedpp');
             vscode.workspace.openTextDocument(path).then((document) => {
                 let text = document.getText();
                 var json = null;
