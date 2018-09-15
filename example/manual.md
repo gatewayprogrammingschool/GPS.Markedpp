@@ -1,3 +1,5 @@
+# GPS.Markedpp Example
+
 !TOC
-!include(include1.md)
-!include(include2.md)
+!include(include1.mdt)
+!include(include2.mdt)
