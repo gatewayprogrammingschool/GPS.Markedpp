@@ -1,3 +1,7 @@
-### Include 2
+# Include 2
 
-Ipsum Lorum.
+Ipsum Lorem.
+
+## More text
+
+Ipsum Lorem 2.
