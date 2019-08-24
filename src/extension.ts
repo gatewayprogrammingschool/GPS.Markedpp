@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
           "No workspace folder.  Defaulting to actual path."
         );
       } else {
-        var rootFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;
+        rootFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;
       }
 
       var markedppOptions = new MarkedppOptions();
@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
                     throw err;
                   }
 
-                  markedpp(data.toString(), options, function(
+                  markedpp(data.toString(), options, function (
                     err: any,
                     result: string
                   ) {
@@ -97,7 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
 
 function writeResult(path: string, result: string, filename: string) {
   var file = require("path").join(path, filename.replace(/^.*[\\\/]/, ""));
@@ -109,7 +109,7 @@ function writeResult(path: string, result: string, filename: string) {
   }
 
   writeFile(file, result, null, err => {
-    vscode.window.showErrorMessage(err.message);
+    if (err !== null) { vscode.window.showErrorMessage(err.message); }
     console.error(err);
   });
 }
